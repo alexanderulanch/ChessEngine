@@ -20,6 +20,7 @@ public abstract class BoardUtils {
 
         return column;
     }
+
     public static boolean isValidTileCoordinate(final int coordinate) {
         return coordinate >= 0 && coordinate < 64;
     }
