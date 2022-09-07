@@ -1,10 +1,8 @@
 package com.alexulanch.chessgui.pieces;
 
 import com.alexulanch.chessgui.Alliance;
-import com.alexulanch.chessgui.board.Board;
-import com.alexulanch.chessgui.board.BoardUtils;
-import com.alexulanch.chessgui.board.Move;
-import com.alexulanch.chessgui.board.Tile;
+import com.alexulanch.chessgui.board.*;
+import com.alexulanch.chessgui.board.Move.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,20 +28,20 @@ public class Bishop extends Piece {
                     || isEighthColumnExclusion(candidateDestinationCoordinate, candidateCoordinateOffset)) {
                     break;
                 }
-                
+
                 candidateDestinationCoordinate += candidateCoordinateOffset;
 
                 if (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
                     final Tile candidateDestinationTile = Board.getTile(candidateDestinationCoordinate);
 
                     if (!candidateDestinationTile.isOccupied()) {
-                        legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                        legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));
                     } else {
                         final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                         final Alliance destinationPieceAlliance = pieceAtDestination.getPieceAlliance();
 
                         if (this.getPieceAlliance() != destinationPieceAlliance) {
-                            legalMoves.add(new Move.AttackMove(board, this, candidateDestinationCoordinate, pieceAtDestination));
+                            legalMoves.add(new AttackMove(board, this, candidateDestinationCoordinate, pieceAtDestination));
                         }
                         break; // Breaks when Bishop reaches piece on diagonal.
                     }
