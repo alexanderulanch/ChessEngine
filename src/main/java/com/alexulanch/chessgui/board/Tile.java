@@ -12,7 +12,6 @@ import java.util.Map;
  * @author Alex Ulanch
  */
 public abstract class Tile {
-    protected static final int NUM_TILES = 64; // Total number of tiles on an 8x8 board.
     protected final int TILE_COORDINATE;
     protected final Color TILE_COLOR;
     public abstract boolean isOccupied();
@@ -49,7 +48,7 @@ public abstract class Tile {
      */
     public static Map<Integer, EmptyTile> populateEmptyTiles() {
         final Map<Integer, EmptyTile> emptyTileMap = new HashMap<>();
-        for (int i = 0; i < NUM_TILES; i++) {
+        for (int i = 0; i < BoardUtils.NUM_TILES; i++) {
             Color tileColor = i % 2 == 0 ? Color.BLACK : Color.WHITE;
             emptyTileMap.put(i, new EmptyTile(i, tileColor));
         }
@@ -60,7 +59,6 @@ public abstract class Tile {
     public int getTileCoordinate() {
         return TILE_COORDINATE;
     }
-
     public Color getColor() {
         return TILE_COLOR;
     }
