@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Rook extends Piece {
-    private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-8, -1, 1, 8};
+    private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATES = { -8, -1, 1, 8 };
 
     Rook(int piecePosition, Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
@@ -26,9 +26,9 @@ public class Rook extends Piece {
             int candidateDestinationCoordinate = this.getPiecePosition();
 
             while (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
-                if (isFirstColumnExclusion(candidateDestinationCoordinate, candidateCoordinateOffset)
-                        || isEighthColumnExclusion(candidateDestinationCoordinate, candidateCoordinateOffset)) {
-                    break;
+                if (isFirstColumnExclusion(candidateDestinationCoordinate, candidateCoordinateOffset) ||
+                    isEighthColumnExclusion(candidateDestinationCoordinate, candidateCoordinateOffset)) {
+                        break;
                 }
 
                 candidateDestinationCoordinate += candidateCoordinateOffset;
@@ -43,7 +43,8 @@ public class Rook extends Piece {
                         final Alliance destinationPieceAlliance = pieceAtDestination.getPieceAlliance();
 
                         if (this.getPieceAlliance() != destinationPieceAlliance) {
-                            legalMoves.add(new Move.AttackMove(board, this, candidateDestinationCoordinate, pieceAtDestination));
+                            legalMoves.add(new Move.AttackMove(board, this,
+                            candidateDestinationCoordinate, pieceAtDestination));
                         }
                         break; // Breaks when Bishop reaches piece on diagonal.
                     }
