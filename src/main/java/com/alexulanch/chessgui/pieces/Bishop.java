@@ -17,6 +17,9 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public String toString() { return "B"; }
+
+    @Override
     public Collection<Move> calculateLegalMoves(Board board) {
         final List<Move> legalMoves = new ArrayList<>();
 

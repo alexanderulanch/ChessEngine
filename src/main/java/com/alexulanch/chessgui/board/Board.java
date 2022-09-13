@@ -12,7 +12,40 @@ public class Board {
     private final Collection<Piece> whitePieces;
     private final Collection<Piece> blackPieces;
 
-    private Collection<Piece> calculateActivePieces(final List<Tile> gameBoard,
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < BoardUtils.NUM_TILES; i++) {
+            final String tileText = gameBoard.get(i).toString();
+            builder.append(String.format("%3s", tileText));
+
+            if ((i + 1) % BoardUtils.NUM_TILES_PER_ROW == 0) {
+                builder.append("\n");
+            }
+        }
+        return builder.toString();
+    }
+
+    private Board(Builder builder) {
+        this.gameBoard = createGameBoard(builder);
+        this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.WHITE);
+        this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.BLACK);
+
+        final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(whitePieces);
+        final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(blackPieces);
+    }
+
+    private Collection<Move> calculateLegalMoves(final Collection<Piece> pieces) {
+        final List<Move> legalMoves = new ArrayList<>();
+
+        for (final Piece piece : pieces) {
+            legalMoves.addAll(piece.calculateLegalMoves(this));
+        }
+        return Collections.unmodifiableList(legalMoves);
+    }
+
+    private static Collection<Piece> calculateActivePieces(final List<Tile> gameBoard,
                                                     final Alliance alliance) {
         final List<Piece> activePieces = new ArrayList<>();
 
@@ -29,13 +62,13 @@ public class Board {
     }
 
     private static List<Tile> createGameBoard(final Builder builder) {
-        final var tiles = new ArrayList<Tile>(BoardUtils.NUM_TILES);
+        final Tile[] tiles = new Tile[BoardUtils.NUM_TILES];
 
-        for (int i = 0; i <  BoardUtils.NUM_TILES; i++) {
-            tiles.set(i, Tile.createTile(i, builder.boardConfig.get(i)));
+        for (int i = 0; i < BoardUtils.NUM_TILES; i++) {
+            tiles[i] = Tile.createTile(i, builder.boardConfig.get(i));
         }
 
-        return Collections.unmodifiableList(tiles);
+        return Collections.unmodifiableList(List.of(tiles));
     }
 
     public static Board createStandardBoard() {
@@ -83,14 +116,8 @@ public class Board {
         return builder.build();
     }
 
-    private Board(Builder builder) {
-        this.gameBoard = createGameBoard(builder);
-        this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.WHITE);
-        this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.BLACK);
-    }
-
     public Tile getTile(final int tileCoordinate) {
-        return null;
+        return gameBoard.get(tileCoordinate);
     }
 
     public static class Builder {
@@ -98,6 +125,7 @@ public class Board {
         Alliance nextMoveMaker;
 
         public Builder() {
+            this.boardConfig = new HashMap<>();
         }
 
         public Builder setPiece(final Piece piece) {

@@ -19,6 +19,9 @@ public class Rook extends Piece {
     }
 
     @Override
+    public String toString() { return "R"; }
+
+    @Override
     public Collection<Move> calculateLegalMoves(Board board) {
         final List<Move> legalMoves = new ArrayList<>();
 

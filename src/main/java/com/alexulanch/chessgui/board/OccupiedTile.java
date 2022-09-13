@@ -10,6 +10,12 @@ import java.awt.*;
 public final class OccupiedTile extends Tile {
     private final Piece pieceOnTile;
 
+    @Override
+    public String toString() {
+    return pieceOnTile.getPieceAlliance().isBlack() ?
+           pieceOnTile.toString().toLowerCase() : pieceOnTile.toString();
+    }
+
     protected OccupiedTile(int tileCoordinate, Piece pieceOnTile) {
         super(tileCoordinate);
         this.pieceOnTile = pieceOnTile;

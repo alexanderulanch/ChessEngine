@@ -18,6 +18,9 @@ public class Pawn extends Piece  {
     }
 
     @Override
+    public String toString() { return "P"; }
+
+    @Override
     public Collection<Move> calculateLegalMoves(final Board board) {
         final List<Move> legalMoves = new ArrayList<>();
 
@@ -36,8 +39,8 @@ public class Pawn extends Piece  {
                 legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
             } else if (currentCandidateOffset == 16 && // Handles pawn's ability to jump on first move
                     this.isFirstMove() &&
-                    (BoardUtils.SECOND_RANK[this.getPiecePosition()] && this.getPieceAlliance().isWhite()) ||
-                    (BoardUtils.SEVENTH_RANK[this.getPiecePosition()] && this.getPieceAlliance().isBlack())) {
+                    (BoardUtils.SECOND_ROW[this.getPiecePosition()] && this.getPieceAlliance().isWhite()) ||
+                    (BoardUtils.SEVENTH_ROW[this.getPiecePosition()] && this.getPieceAlliance().isBlack())) {
                 final int behindCandidateDestinationCoordinate = this.getPiecePosition() + (this.getPieceAlliance().getDirection() * 8);
                 if (!board.getTile(behindCandidateDestinationCoordinate).isOccupied() &&
                     !board.getTile(candidateDestinationCoordinate).isOccupied()) {

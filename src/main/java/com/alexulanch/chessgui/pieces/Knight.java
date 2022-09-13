@@ -19,6 +19,9 @@ public final class Knight extends Piece {
     }
 
     @Override
+    public String toString() { return "N"; }
+
+    @Override
     public Collection<Move> calculateLegalMoves(final Board board) {
         final List<Move> legalMoves = new ArrayList<>();
 
