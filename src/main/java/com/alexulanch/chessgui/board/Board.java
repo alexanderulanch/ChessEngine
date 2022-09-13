@@ -4,13 +4,19 @@ package com.alexulanch.chessgui.board;
 
 import com.alexulanch.chessgui.Alliance;
 import com.alexulanch.chessgui.pieces.*;
+import com.alexulanch.chessgui.player.BlackPlayer;
+import com.alexulanch.chessgui.player.WhitePlayer;
 
 import java.util.*;
 
 public class Board {
     private final List<Tile> gameBoard;
     private final Collection<Piece> whitePieces;
+
     private final Collection<Piece> blackPieces;
+
+    private final WhitePlayer whitePlayer;
+    private final BlackPlayer blackPlayer;
 
     @Override
     public String toString() {
@@ -18,8 +24,11 @@ public class Board {
 
         for (int i = 0; i < BoardUtils.NUM_TILES; i++) {
             final String tileText = gameBoard.get(i).toString();
+
+            // Adds 3 char length space between pieces for readability.
             builder.append(String.format("%3s", tileText));
 
+            // Adds a newline terminator after each row.
             if ((i + 1) % BoardUtils.NUM_TILES_PER_ROW == 0) {
                 builder.append("\n");
             }
@@ -34,6 +43,9 @@ public class Board {
 
         final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(whitePieces);
         final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(blackPieces);
+
+        this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
+        this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
     }
 
     private Collection<Move> calculateLegalMoves(final Collection<Piece> pieces) {
@@ -118,6 +130,22 @@ public class Board {
 
     public Tile getTile(final int tileCoordinate) {
         return gameBoard.get(tileCoordinate);
+    }
+
+    public Collection<Piece> getBlackPieces() {
+        return blackPieces;
+    }
+
+    public Collection<Piece> getWhitePieces() {
+        return whitePieces;
+    }
+
+    public WhitePlayer getWhitePlayer() {
+        return whitePlayer;
+    }
+
+    public BlackPlayer getBlackPlayer() {
+        return blackPlayer;
     }
 
     public static class Builder {

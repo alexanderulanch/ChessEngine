@@ -10,8 +10,10 @@ public abstract class Piece {
     private final int piecePosition;
     private final Alliance pieceAlliance;
     private final boolean isFirstMove;
+    private final PieceType pieceType;
 
-    Piece(final int piecePosition, final Alliance pieceAlliance) {
+    Piece(final PieceType pieceType, final int piecePosition, final Alliance pieceAlliance) {
+        this.pieceType = pieceType;
         this.piecePosition = piecePosition;
         this.pieceAlliance = pieceAlliance;
         isFirstMove = false;
@@ -22,11 +24,16 @@ public abstract class Piece {
     public Alliance getPieceAlliance() {
         return pieceAlliance;
     }
+
     public int getPiecePosition() {
         return piecePosition;
     }
 
     public boolean isFirstMove() {
         return isFirstMove;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }

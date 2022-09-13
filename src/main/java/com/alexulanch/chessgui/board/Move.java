@@ -3,9 +3,9 @@ package com.alexulanch.chessgui.board;
 import com.alexulanch.chessgui.pieces.Piece;
 
 public abstract class Move {
-    final Board board;
-    final Piece movedPiece;
-    final int destinationCoordinate;
+    private final Board board;
+    private final Piece movedPiece;
+    private final int destinationCoordinate;
 
     Move(final Board board,
          final Piece movedPiece,
@@ -13,6 +13,10 @@ public abstract class Move {
         this.board = board;
         this.movedPiece = movedPiece;
         this.destinationCoordinate = destinationCoordinate;
+    }
+
+    public int getDestinationCoordinate() {
+        return destinationCoordinate;
     }
 
     public static final class MajorMove extends Move {
