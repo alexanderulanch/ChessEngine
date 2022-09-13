@@ -10,8 +10,8 @@ import java.awt.*;
 public final class OccupiedTile extends Tile {
     private final Piece pieceOnTile;
 
-    protected OccupiedTile(int tileCoordinate, Color tileColor, Piece pieceOnTile) {
-        super(tileCoordinate, tileColor);
+    protected OccupiedTile(int tileCoordinate, Piece pieceOnTile) {
+        super(tileCoordinate);
         this.pieceOnTile = pieceOnTile;
     }
 

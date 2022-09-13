@@ -14,7 +14,7 @@ import java.util.List;
 public class Rook extends Piece {
     private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATES = { -8, -1, 1, 8 };
 
-    Rook(int piecePosition, Alliance pieceAlliance) {
+    public Rook(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -34,7 +34,7 @@ public class Rook extends Piece {
                 candidateDestinationCoordinate += candidateCoordinateOffset;
 
                 if (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
-                    final Tile candidateDestinationTile = Board.getTile(candidateDestinationCoordinate);
+                    final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
 
                     if (!candidateDestinationTile.isOccupied()) {
                         legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));

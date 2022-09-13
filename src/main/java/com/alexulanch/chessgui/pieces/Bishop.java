@@ -12,7 +12,7 @@ import java.util.List;
 public class Bishop extends Piece {
     private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATES = { -9, -7, 7, 9 };
 
-    Bishop(final int piecePosition, final Alliance pieceAlliance) {
+    public Bishop(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -32,7 +32,7 @@ public class Bishop extends Piece {
                 candidateDestinationCoordinate += candidateCoordinateOffset;
 
                 if (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
-                    final Tile candidateDestinationTile = Board.getTile(candidateDestinationCoordinate);
+                    final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
 
                     if (!candidateDestinationTile.isOccupied()) {
                         legalMoves.add(new MajorMove(board, this, candidateDestinationCoordinate));

@@ -13,31 +13,25 @@ import java.util.Map;
  */
 public abstract class Tile {
     protected final int TILE_COORDINATE;
-    protected final Color TILE_COLOR;
     public abstract boolean isOccupied();
     public abstract Piece getPiece();
 
     private static final Map<Integer, EmptyTile> EMPTY_TILES_CACHE = populateEmptyTiles();
 
-    protected Tile(final int tileCoordinate, final Color tileColor) {
+    protected Tile(final int tileCoordinate) {
         this.TILE_COORDINATE = tileCoordinate;
-        this.TILE_COLOR = tileColor;
     }
 
     /**
      * Creates and returns an OccupiedTile if Piece parameter is not null.
      * else returns an EmptyTile from cache with given tileCoordinate.
      * @param tileCoordinate
-     * @param tileColor
      * @param piece
      * @return either an OccupiedTile or EmptyTile depending on piece parameter.
      */
-    public static Tile createTile(final int tileCoordinate,
-                                  final Color tileColor,
-                                  final Piece piece) {
-
+    public static Tile createTile(final int tileCoordinate, final Piece piece) {
         return piece != null ?
-                new OccupiedTile(tileCoordinate, tileColor, piece)
+                new OccupiedTile(tileCoordinate, piece)
                 : EMPTY_TILES_CACHE.get(tileCoordinate);
     }
 
@@ -49,8 +43,7 @@ public abstract class Tile {
     public static Map<Integer, EmptyTile> populateEmptyTiles() {
         final Map<Integer, EmptyTile> emptyTileMap = new HashMap<>();
         for (int i = 0; i < BoardUtils.NUM_TILES; i++) {
-            Color tileColor = i % 2 == 0 ? Color.BLACK : Color.WHITE;
-            emptyTileMap.put(i, new EmptyTile(i, tileColor));
+            emptyTileMap.put(i, new EmptyTile(i));
         }
 
         return Collections.unmodifiableMap(emptyTileMap); // Makes map immutable.
@@ -58,8 +51,5 @@ public abstract class Tile {
 
     public int getTileCoordinate() {
         return TILE_COORDINATE;
-    }
-    public Color getColor() {
-        return TILE_COLOR;
     }
 }

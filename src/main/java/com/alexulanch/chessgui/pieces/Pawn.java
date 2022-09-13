@@ -11,17 +11,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class Pawn extends Piece  {
-    private final static int[] CANDIDATE_MOVE_COORDINATE = {8, 16};
+    private final static int[] CANDIDATE_MOVE_COORDINATES = {8, 16, 7, 9};
 
-    Pawn(int piecePosition, Alliance pieceAlliance) {
+    public Pawn(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
     @Override
-    public Collection<Move> calculateLegalMoves(Board board) {
+    public Collection<Move> calculateLegalMoves(final Board board) {
         final List<Move> legalMoves = new ArrayList<>();
 
-        for (final int currentCandidateOffset : CANDIDATE_MOVE_COORDINATE) {
+        for (final int currentCandidateOffset : CANDIDATE_MOVE_COORDINATES) {
             int candidateDestinationCoordinate =
                     this.getPiecePosition() +
                     (currentCandidateOffset *
@@ -33,17 +33,39 @@ public class Pawn extends Piece  {
 
             if (currentCandidateOffset == 8 && board.getTile(candidateDestinationCoordinate).isOccupied()) {
                 //TODO To be amended.
-                legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));;
-            } else if (currentCandidateOffset == 16 &&
+                legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+            } else if (currentCandidateOffset == 16 && // Handles pawn's ability to jump on first move
                     this.isFirstMove() &&
                     (BoardUtils.SECOND_RANK[this.getPiecePosition()] && this.getPieceAlliance().isWhite()) ||
                     (BoardUtils.SEVENTH_RANK[this.getPiecePosition()] && this.getPieceAlliance().isBlack())) {
                 final int behindCandidateDestinationCoordinate = this.getPiecePosition() + (this.getPieceAlliance().getDirection() * 8);
-                if (!Board.getTile(behindCandidateDestinationCoordinate).isOccupied() &&
-                    !Board.getTile(candidateDestinationCoordinate).isOccupied()) {
+                if (!board.getTile(behindCandidateDestinationCoordinate).isOccupied() &&
+                    !board.getTile(candidateDestinationCoordinate).isOccupied()) {
                     //FIXME
-                    legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));;
+                    legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                 }
+            } else if (currentCandidateOffset == 7 && // Handles condition where pawn is on edge file.
+                      !((BoardUtils.EIGHTH_COLUMN[this.getPiecePosition()] && this.getPieceAlliance().isWhite()) ||
+                      (BoardUtils.FIRST_COLUMN[this.getPiecePosition()] && this.getPieceAlliance().isBlack()))) {
+                if (board.getTile(candidateDestinationCoordinate).isOccupied()) {
+                    final Piece pieceOnCandidateTile = board.getTile(candidateDestinationCoordinate).getPiece();
+                    if(this.getPieceAlliance() != pieceOnCandidateTile.getPieceAlliance()) {
+                        //FIXME after creating AttackMove class
+                        legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                    }
+                }
+            } else if (currentCandidateOffset == 9 && // Handles condition where pawn is on edge file.
+                    !((BoardUtils.FIRST_COLUMN[this.getPiecePosition()] && this.getPieceAlliance().isWhite()) ||
+                    (BoardUtils.EIGHTH_COLUMN[this.getPiecePosition()] && this.getPieceAlliance().isBlack()))) {
+                if (board.getTile(candidateDestinationCoordinate).isOccupied()) {
+                    final Piece pieceOnCandidateTile = board.getTile(candidateDestinationCoordinate).getPiece();
+                    if(this.getPieceAlliance() != pieceOnCandidateTile.getPieceAlliance()) {
+                        //FIXME after creating AttackMove class
+                        legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                    }
+                }
+
+                return Collections.unmodifiableList(legalMoves);
             }
         }
 
