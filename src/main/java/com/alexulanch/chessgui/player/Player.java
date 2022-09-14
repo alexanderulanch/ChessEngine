@@ -3,6 +3,7 @@ package com.alexulanch.chessgui.player;
 import com.alexulanch.chessgui.Alliance;
 import com.alexulanch.chessgui.board.Board;
 import com.alexulanch.chessgui.board.Move;
+import com.alexulanch.chessgui.board.MoveStatus;
 import com.alexulanch.chessgui.board.MoveTransition;
 import com.alexulanch.chessgui.pieces.King;
 import com.alexulanch.chessgui.pieces.Piece;
@@ -15,10 +16,11 @@ import java.util.List;
 public abstract class Player {
     protected final Board board;
     protected final King playerKing;
+
     protected final Collection<Move> legalMoves;
+
     protected final Collection<Move> opponentMoves;
     protected final boolean isInCheck;
-
     Player(final Board board,
            final Collection<Move> legalMoves,
            final Collection<Move> opponentMoves) {
@@ -83,10 +85,33 @@ public abstract class Player {
     }
 
     public MoveTransition makeMove(final Move move) {
-        return null;
+        if(!isMoveLegal(move)) {
+            // If move is illegal return same board with ILLEGAL_MOVE MoveStatus
+            return new MoveTransition(this.board, move, MoveStatus.ILLEGAL_MOVE);
+        }
+
+        final Board transitionBoard = move.execute();
+        final Collection<Move> kingAttacks = Player.calculateAttacksOnTile(transitionBoard.getCurrentPlayer().getOpponent().getPlayerKing().getPiecePosition(),
+                transitionBoard.getCurrentPlayer().getLegalMoves());
+
+        // If move leads to King being put in check return same board with LEAVES_PLAYER_IN_CHECK MoveStatus
+        if (!kingAttacks.isEmpty()) {
+            return new MoveTransition(this.board, move, MoveStatus.LEAVES_PLAYER_IN_CHECK);
+        }
+
+        return new MoveTransition(transitionBoard, move, MoveStatus.DONE);
     }
 
     public abstract Collection<Piece> getActivePieces();
+
+    public King getPlayerKing() {
+        return playerKing;
+    }
+
+    public Collection<Move> getLegalMoves() {
+        return legalMoves;
+    }
+
     public abstract Alliance getAlliance();
     public abstract Player getOpponent();
 }
