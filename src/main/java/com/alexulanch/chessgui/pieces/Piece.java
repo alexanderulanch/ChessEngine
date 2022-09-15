@@ -31,10 +31,10 @@ public abstract class Piece {
 
         final Piece otherPiece = (Piece) other;
 
-        return (piecePosition == otherPiece.piecePosition &&
-                pieceType == otherPiece.getPieceType() &&
-                pieceAlliance == otherPiece.getPieceAlliance() &&
-                isFirstMove == otherPiece.isFirstMove());
+        return piecePosition == otherPiece.piecePosition &&
+               pieceType == otherPiece.getPieceType() &&
+               pieceAlliance == otherPiece.getPieceAlliance() &&
+               isFirstMove == otherPiece.isFirstMove();
 
     }
 
@@ -44,10 +44,11 @@ public abstract class Piece {
     }
 
     private int computeHashCode() {
+        final int PRIME = 31;
         int result = pieceType.hashCode();
-        result = 31 * result + pieceAlliance.hashCode();
-        result = 31 * result + piecePosition;
-        result = 31 * result + (isFirstMove ? 1 : 0);
+        result = PRIME * result + pieceAlliance.hashCode();
+        result = PRIME * result + piecePosition;
+        result = PRIME * result + (isFirstMove ? 1 : 0);
 
         return result;
     }
