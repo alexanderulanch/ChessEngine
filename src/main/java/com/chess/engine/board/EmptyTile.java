@@ -1,8 +1,6 @@
-package com.alexulanch.chessgui.board;
+package com.chess.engine.board;
 
-import com.alexulanch.chessgui.pieces.Piece;
-
-import java.awt.*;
+import com.chess.engine.pieces.Piece;
 
 /**
  * A subclass of Tile that handles tiles without a piece on it.

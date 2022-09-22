@@ -1,10 +1,10 @@
-package com.alexulanch.chessgui.pieces;
+package com.chess.engine.pieces;
 
-import com.alexulanch.chessgui.Alliance;
-import com.alexulanch.chessgui.board.Board;
-import com.alexulanch.chessgui.board.BoardUtils;
-import com.alexulanch.chessgui.board.Move;
-import com.alexulanch.chessgui.board.Tile;
+import com.chess.engine.Alliance;
+import com.chess.engine.board.Board;
+import com.chess.engine.board.BoardUtils;
+import com.chess.engine.board.Move;
+import com.chess.engine.board.Tile;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,7 +62,7 @@ public final class Knight extends Piece {
     }
 
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return BoardUtils.FIRST_COLUMN[currentPosition] &&
+        return BoardUtils.A_FILE[currentPosition] &&
                 (candidateOffset == -17 ||
                  candidateOffset == -10 ||
                  candidateOffset == 6 ||
@@ -70,17 +70,17 @@ public final class Knight extends Piece {
     }
 
     private static boolean isSecondColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return BoardUtils.SECOND_COLUMN[currentPosition]
+        return BoardUtils.B_FILE[currentPosition]
                 && (candidateOffset == -10 || candidateOffset == 6);
     }
 
     private static boolean isSeventhColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return BoardUtils.SEVENTH_COLUMN[currentPosition]
+        return BoardUtils.G_FILE[currentPosition]
                 && (candidateOffset == -6 || candidateOffset == 10);
     }
 
     private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOffset) {
-        return BoardUtils.EIGHTH_COLUMN[currentPosition] &&
+        return BoardUtils.H_FILE[currentPosition] &&
                 (candidateOffset == -15 ||
                  candidateOffset == -6 ||
                  candidateOffset == 10 ||

@@ -1,4 +1,4 @@
-package com.alexulanch.chessgui.board;
+package com.chess.engine.board;
 
 public enum MoveStatus {
     DONE {

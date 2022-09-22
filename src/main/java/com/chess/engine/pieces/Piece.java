@@ -1,8 +1,8 @@
-package com.alexulanch.chessgui.pieces;
+package com.chess.engine.pieces;
 
-import com.alexulanch.chessgui.Alliance;
-import com.alexulanch.chessgui.board.Board;
-import com.alexulanch.chessgui.board.Move;
+import com.chess.engine.Alliance;
+import com.chess.engine.board.Board;
+import com.chess.engine.board.Move;
 
 import java.util.Collection;
 

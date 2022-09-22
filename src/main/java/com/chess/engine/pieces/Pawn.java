@@ -1,9 +1,9 @@
-package com.alexulanch.chessgui.pieces;
+package com.chess.engine.pieces;
 
-import com.alexulanch.chessgui.Alliance;
-import com.alexulanch.chessgui.board.Board;
-import com.alexulanch.chessgui.board.BoardUtils;
-import com.alexulanch.chessgui.board.Move;
+import com.chess.engine.Alliance;
+import com.chess.engine.board.Board;
+import com.chess.engine.board.BoardUtils;
+import com.chess.engine.board.Move;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,8 +44,8 @@ public class Pawn extends Piece  {
                 legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
             } else if (currentCandidateOffset == 16 && // Handles pawn's ability to jump on first move
                     this.isFirstMove() &&
-                    (BoardUtils.SECOND_ROW[this.getPiecePosition()] && this.getPieceAlliance().isWhite()) ||
-                    (BoardUtils.SEVENTH_ROW[this.getPiecePosition()] && this.getPieceAlliance().isBlack())) {
+                    (BoardUtils.SEVENTH_RANK[this.getPiecePosition()] && this.getPieceAlliance().isWhite()) ||
+                    (BoardUtils.SECOND_RANK[this.getPiecePosition()] && this.getPieceAlliance().isBlack())) {
                 final int behindCandidateDestinationCoordinate = this.getPiecePosition() + (this.getPieceAlliance().getDirection() * 8);
                 if (!board.getTile(behindCandidateDestinationCoordinate).isOccupied() &&
                     !board.getTile(candidateDestinationCoordinate).isOccupied()) {
@@ -53,8 +53,8 @@ public class Pawn extends Piece  {
                     legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
                 }
             } else if (currentCandidateOffset == 7 && // Handles condition where pawn is on edge file.
-                      !((BoardUtils.EIGHTH_COLUMN[this.getPiecePosition()] && this.getPieceAlliance().isWhite()) ||
-                      (BoardUtils.FIRST_COLUMN[this.getPiecePosition()] && this.getPieceAlliance().isBlack()))) {
+                      !((BoardUtils.H_FILE[this.getPiecePosition()] && this.getPieceAlliance().isWhite()) ||
+                      (BoardUtils.A_FILE[this.getPiecePosition()] && this.getPieceAlliance().isBlack()))) {
                 if (board.getTile(candidateDestinationCoordinate).isOccupied()) {
                     final Piece pieceOnCandidateTile = board.getTile(candidateDestinationCoordinate).getPiece();
                     if(this.getPieceAlliance() != pieceOnCandidateTile.getPieceAlliance()) {
@@ -63,8 +63,8 @@ public class Pawn extends Piece  {
                     }
                 }
             } else if (currentCandidateOffset == 9 && // Handles condition where pawn is on edge file.
-                    !((BoardUtils.FIRST_COLUMN[this.getPiecePosition()] && this.getPieceAlliance().isWhite()) ||
-                    (BoardUtils.EIGHTH_COLUMN[this.getPiecePosition()] && this.getPieceAlliance().isBlack()))) {
+                    !((BoardUtils.A_FILE[this.getPiecePosition()] && this.getPieceAlliance().isWhite()) ||
+                    (BoardUtils.H_FILE[this.getPiecePosition()] && this.getPieceAlliance().isBlack()))) {
                 if (board.getTile(candidateDestinationCoordinate).isOccupied()) {
                     final Piece pieceOnCandidateTile = board.getTile(candidateDestinationCoordinate).getPiece();
                     if(this.getPieceAlliance() != pieceOnCandidateTile.getPieceAlliance()) {

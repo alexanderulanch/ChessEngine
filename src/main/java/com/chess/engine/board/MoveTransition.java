@@ -1,6 +1,4 @@
-package com.alexulanch.chessgui.board;
-
-import java.util.concurrent.CompletableFuture;
+package com.chess.engine.board;
 
 public class MoveTransition {
     private final Board transitionBoard;

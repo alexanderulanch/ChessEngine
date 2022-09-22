@@ -1,8 +1,8 @@
-package com.alexulanch.chessgui;
+package com.chess.engine;
 
-import com.alexulanch.chessgui.player.BlackPlayer;
-import com.alexulanch.chessgui.player.Player;
-import com.alexulanch.chessgui.player.WhitePlayer;
+import com.chess.engine.player.BlackPlayer;
+import com.chess.engine.player.Player;
+import com.chess.engine.player.WhitePlayer;
 
 public enum Alliance {
     WHITE {

@@ -1,12 +1,12 @@
-package com.alexulanch.chessgui.player;
+package com.chess.engine.player;
 
-import com.alexulanch.chessgui.Alliance;
-import com.alexulanch.chessgui.board.Board;
-import com.alexulanch.chessgui.board.Move;
-import com.alexulanch.chessgui.board.MoveStatus;
-import com.alexulanch.chessgui.board.MoveTransition;
-import com.alexulanch.chessgui.pieces.King;
-import com.alexulanch.chessgui.pieces.Piece;
+import com.chess.engine.Alliance;
+import com.chess.engine.board.Board;
+import com.chess.engine.board.Move;
+import com.chess.engine.board.MoveStatus;
+import com.chess.engine.board.MoveTransition;
+import com.chess.engine.pieces.King;
+import com.chess.engine.pieces.Piece;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,11 +16,10 @@ import java.util.List;
 public abstract class Player {
     protected final Board board;
     protected final King playerKing;
-
     protected final Collection<Move> legalMoves;
-
     protected final Collection<Move> opponentMoves;
     protected final boolean isInCheck;
+
     Player(final Board board,
            final Collection<Move> legalMoves,
            final Collection<Move> opponentMoves) {
@@ -34,14 +33,14 @@ public abstract class Player {
 
     private King establishKing() {
         for (final Piece piece : getActivePieces()) {
-            if (piece.getPieceType().isKing(piece)) {
+            if (piece.getPieceType().isKing()) {
                 return (King) piece;
             }
         }
         return null;
     }
 
-    private static Collection<Move> calculateAttacksOnTile(final int piecePosition,
+    protected static Collection<Move> calculateAttacksOnTile(final int piecePosition,
                                                            final Collection<Move> opponentMoves) {
         final List<Move> attackMoves = new ArrayList<>();
         for (final Move move : opponentMoves) {
@@ -114,4 +113,6 @@ public abstract class Player {
 
     public abstract Alliance getAlliance();
     public abstract Player getOpponent();
+    protected abstract Collection<Move> calculateKingCastles(Collection<Move> playersLegalMoves,
+                                                             Collection<Move> opponentsLegalMoves);
 }

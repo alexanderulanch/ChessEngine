@@ -1,7 +1,7 @@
-package com.alexulanch.chessgui.board;
+package com.chess.engine.board;
 
-import com.alexulanch.chessgui.pieces.*;
-import java.awt.*;
+import com.chess.engine.pieces.*;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
